@@ -1,46 +1,51 @@
 if (Meteor.isClient) {
-  // counter starts at 0
-  Session.setDefault('counter', 0);
+  Session.setDefault('isClockRunning', false);
 
   Template.hello.helpers({
-    counter: function () {
-      return Session.get('counter');
+    isClockRunning: function () {
+      return Session.get('isClockRunning');
     }
   });
 
 
   Template.hello.events({
     'click #start': function () {
-      countdown.start($('#clock').val());
-      // increment the counter when button is clicked
-      Session.set('counter', Session.get('counter') + 1);
+      $('#clock').val(0);
+      Session.set('isClockRunning', true);
+      setClockWithCountdown(false);
+      clock.start($('#clock').val());
+    },
+
+    'click #startStopper': function () {
+      Session.set('isClockRunning', true);
+      setClockWithCountdown(true);
+      clock.start($('#clock').val());
     },
 
     'click #stop': function() {
-      countdown.stop();
+      Session.set('isClockRunning', false);
+      clock.stop();
     },
 
     'click #pause': function() {
-      countdown.pause();
+      clock.pause();
     }
   });
 
-  var timer = new Tock({
-    callback: function () {
-        var current_time = timer.msToTime(timer.lap());
-        $('#clock').val(current_time);
-    }
-  });
+  var clock;
+}
 
-  var countdown = Tock({
-    countdown: true,
+function setClockWithCountdown(isCountdown) {
+  clock = Tock({
+    countdown: isCountdown,
     interval: 250,
     callback: function () {
-        console.log(countdown.lap() / 1000);
-        $('#clock').val(countdown.msToTime(Math.round(countdown.lap() / 1000) * 1000));
+        console.log(clock.lap() / 1000);
+        $('#clock').val(clock.msToTime(Math.round(clock.lap() / 1000) * 1000));
     },
     complete: function () {
         console.log('end');
+        Session.set('isClockRunning', false);
         alert("Time's up!");
     }
   });
