@@ -46,7 +46,10 @@ function setClockWithCountdown(isCountdown) {
     complete: function () {
         console.log('end');
         Session.set('isClockRunning', false);
-        alert("Time's up!");
+        var audio = new Audio('/sounds/zen-gong.mp3');
+        audio.addEventListener('canplaythrough', function() {
+          audio.play();
+        });
     }
   });
 }
