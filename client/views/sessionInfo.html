@@ -1,0 +1,19 @@
+<template name="sessionInfo">
+  <br>
+  {{#if currentUser}}
+    {{#with session}}
+      <p>
+        Last session:{{lastSession}}
+      </p>
+      <p>
+        Days Streak: {{daysStreak}}
+      </p>
+      <p>
+        Meditation time: {{meditationTimeInMin}}
+      </p>
+      <p>
+        # Sessions: {{numOfSessions}}
+      </p>
+    {{/with}}
+  {{/if}}
+</template>

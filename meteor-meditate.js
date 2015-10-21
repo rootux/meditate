@@ -1,61 +1,39 @@
-if (Meteor.isClient) {
-  Session.setDefault('isClockRunning', false);
+Sessions = new Mongo.Collection("sessions");
 
-  Template.hello.helpers({
-    isClockRunning: function () {
-      return Session.get('isClockRunning');
+Meteor.methods({
+  insertSession: function () {
+    if (! Meteor.userId()) {
+        throw new Meteor.Error("not-authorized");
     }
-  });
-
-
-  Template.hello.events({
-    'click #start': function () {
-      $('#clock').val(0);
-      Session.set('isClockRunning', true);
-      setClockWithCountdown(false);
-      clock.start($('#clock').val());
-    },
-
-    'click #startStopper': function () {
-      Session.set('isClockRunning', true);
-      setClockWithCountdown(true);
-      clock.start($('#clock').val());
-    },
-
-    'click #stop': function() {
-      Session.set('isClockRunning', false);
-      clock.stop();
-    },
-
-    'click #pause': function() {
-      clock.pause();
+    
+    if (Sessions.find({userId: Meteor.userId()})) {
+        throw new Meteor.Error("session-already-exist"); 
     }
-  });
+    return Sessions.insert({
+      userId: Meteor.userId(),
+      lastSession: new Date(),
+      daysStreak: 0,
+      meditationTimeInMin: 0,
+      numOfSessions: 0
+    });
+  },
 
-  var clock;
-}
+  updateSession: function (meditationTimeInMin) {
+    var session = Sessions.find({userId: Meteor.userId()});
 
-function setClockWithCountdown(isCountdown) {
-  clock = Tock({
-    countdown: isCountdown,
-    interval: 250,
-    callback: function () {
-        console.log(clock.lap() / 1000);
-        $('#clock').val(clock.msToTime(Math.round(clock.lap() / 1000) * 1000));
-    },
-    complete: function () {
-        console.log('end');
-        Session.set('isClockRunning', false);
-        var audio = new Audio('/sounds/zen-gong.mp3');
-        audio.addEventListener('canplaythrough', function() {
-          audio.play();
-        });
+    var daysStreaks;
+    if(isStreak(session.lastSession)) {
+      daysStreak = session.daysStreak + 1;
+    }else {
+      daysStreak = 0;
     }
-  });
-}
 
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
-  });
-}
+    Sessions.update(session._id, { $set: {
+      lastSession: new Date(),
+      daysStreak:daysStreak,
+      meditationTimeInMin: session.meditationTimeInMin + meditationTimeInMin,
+      numOfSessions: session.numOfSessions + 1 
+    }}
+    );
+  }
+});

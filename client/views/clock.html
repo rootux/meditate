@@ -1,0 +1,10 @@
+<template name="clock">
+  {{#if isClockRunning}}
+    <button id="stop">Stop</button>
+    <button id="pause">Pause</button>
+  {{else}}
+    <button id="startStopper">Start Stopper</button> 
+    <button id="start">Start</button>
+  {{/if}}
+  <input id="clock" value="00:10">
+</template>
