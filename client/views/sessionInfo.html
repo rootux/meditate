@@ -1,20 +1,38 @@
 <template name="sessionInfo">
-  <div class="row">
   {{#if currentUser}}
     {{#with session}}
-      <p>
-        Last session:{{lastSession}}
-      </p>
-      <p>
-        Days Streak: {{daysStreak}}
-      </p>
-      <p>
-        Meditation time: {{meditationTimeInMin}}
-      </p>
-      <p>
-        # Sessions: {{numOfSessions}}
-      </p>
+    <div class="col-xs-6">
+      <div class="row">
+        <div class="col-xs-4">
+        <p>
+          Streak:
+        </p>
+        </div>
+        <div class="col-xs-4">
+        <p>
+          Meditation time:
+        </p>
+        </div>
+        <div class="col-xs-4">
+        <p>
+          # Sessions:
+        </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-4">
+          {{daysStreak}}
+        </div>
+        <div class="col-xs-4">
+          {{meditationTimeInMin}}
+        </div>
+        <div class="col-xs-4">
+          {{numOfSessions}}
+        </div>
+      </div>
+    </div>
     {{/with}}
+  {{else}}
+    To really meditate Please login
   {{/if}}
-  </div>
 </template>
