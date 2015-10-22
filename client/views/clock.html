@@ -1,4 +1,5 @@
 <template name="clock">
+	<div class="row">
   {{#if isClockRunning}}
     <button id="stop">Stop</button>
     <button id="pause">Pause</button>
@@ -7,4 +8,5 @@
     <button id="start">Start</button>
   {{/if}}
   <input id="clock" value="00:10">
+	</div>
 </template>

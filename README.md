@@ -1,6 +1,9 @@
 # Meditate
 Meteor app to helps you meditate
 
+# Demo
+http://meditateapp.meteor.com/
+
 ##3rd party libraries
 Clocking tick tock https://github.com/mrchimp/tock
 
