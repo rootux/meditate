@@ -10,7 +10,7 @@
         </div>
         <div class="col-xs-4">
         <p>
-          Meditation time:
+          # Meditation:
         </p>
         </div>
         <div class="col-xs-4">
@@ -32,7 +32,10 @@
       </div>
     </div>
     {{/with}}
+    <div class="row">
+      {{> loginButtons}}
+    </div>
   {{else}}
-    To really meditate Please login
+    To really meditate Please {{> loginButtons}}
   {{/if}}
 </template>

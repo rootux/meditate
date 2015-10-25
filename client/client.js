@@ -19,7 +19,7 @@ Session.setDefault('isClockRunning', false);
 Template.clock.helpers({
   isClockRunning: function () {
     return Session.get('isClockRunning');
-  }
+  },
 });
 
 Template.sessionInfo.helpers({
@@ -28,18 +28,27 @@ Template.sessionInfo.helpers({
   }
 });
 
+Template.clockSelectModal.events({
+    'click #start' : function(event, template) {
+      var minutes = template.find('#min').value;
+      $('#clockSelectModal').modal('hide');
+      $('#clock')[0].value = minutes + ":00"; //TODO: unuglify me
+      Session.set('isClockRunning', true);
+      setClockWithCountdown(true);
+      clock.start($('#clock').val());
+  },
+});
 
 Template.clock.events({
-  'click #start': function () {
+  'click #mandala' : function() {
+    $('#clockSelectModal').modal('show');
+  },
+
+  'click #startClock': function () {
+    console.log('started clock');
     $('#clock').val(0);
     Session.set('isClockRunning', true);
     setClockWithCountdown(false);
-    clock.start($('#clock').val());
-  },
-
-  'click #startStopper': function () {
-    Session.set('isClockRunning', true);
-    setClockWithCountdown(true);
     clock.start($('#clock').val());
   },
 
