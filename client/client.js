@@ -6,15 +6,10 @@ Template.body.helpers({
   }
 });
 
-Tracker.autorun(function(){
-  if(Meteor.userId()){
-    console.log("logged in" + Meteor.userId());
-  }
-});
-
 var clock;
 
 Session.setDefault('isClockRunning', false);
+Session.setDefault('lastClockMin', 0);
 
 Template.clock.helpers({
   isClockRunning: function () {
@@ -31,6 +26,7 @@ Template.sessionInfo.helpers({
 Template.clockSelectModal.events({
     'click #start' : function(event, template) {
       var minutes = template.find('#min').value;
+      Session.set('lastClockMin', minutes);
       $('#clockSelectModal').modal('hide');
       $('#clock')[0].value = minutes + ":00"; //TODO: unuglify me
       Session.set('isClockRunning', true);
@@ -72,8 +68,11 @@ function setClockWithCountdown(isCountdown) {
         $('#clock').val(clock.msToTime(Math.round(clock.lap() / 1000) * 1000));
     },
     complete: function () {
-        console.log('end');
         Session.set('isClockRunning', false);
+        if(Meteor.userId()) {
+          var lastClockMin = Session.get('lastClockMin');
+          Meteor.call('updateSession', lastClockMin);
+        }
         var audio = new Audio('/sounds/zen-gong.mp3');
         audio.addEventListener('canplaythrough', function() {
           audio.play();
