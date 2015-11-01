@@ -21,16 +21,19 @@ Meteor.methods({
   updateSession: function (meditationTimeInMin) {
     var session = Sessions.findOne({userId: Meteor.userId()});
     var daysStreaks;
-    if(isStreak(session.lastSession)) {
+    var streak = isStreak(session.lastSession);
+    if (streak == 1) {
       daysStreak = session.daysStreak + 1;
-    }else {
+    }else if(streak == -1){
       daysStreak = 0;
+    }else { //Same day 2nd meditation
+      daysStreak = session.daysStreak;
     }
-
+    
     return Sessions.update(session._id, { $set: {
       lastSession: new Date(),
       daysStreak:daysStreak,
-      meditationTimeInMin: session.meditationTimeInMin + number(meditationTimeInMin),
+      meditationTimeInMin: session.meditationTimeInMin + Number(meditationTimeInMin),
       numOfSessions: session.numOfSessions + 1 
     }}
     );
