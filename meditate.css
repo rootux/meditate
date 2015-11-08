@@ -30,18 +30,14 @@ h1, h2 {
 
 #mandala {
   width:100%;
-}
-
-#mandale {
   transition: all .4s ease-out;
 }
+
 #mandala:hover
 {
   -webkit-transform:rotate(7deg) scale(1.2);
   -ms-transform: rotate(7deg) scale(1.2);
   transform: rotate(7deg) scale(1.2);
-  
-  background:url('/images/playButton.png') center no-repeat
 }
     
 
