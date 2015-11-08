@@ -8,8 +8,10 @@ html {
 
 body {
 	margin:auto;
+	margin-bottom: 4em;
   background-color: transparent;
   text-align: center;
+  color:white; 
 }
 
 h1, h2 {
@@ -68,7 +70,6 @@ h1, h2 {
   background-color: transparent;
   border: none;
   font-size: 3em;
-  color: white;
   text-align: center;
 }
 
