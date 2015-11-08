@@ -40,6 +40,8 @@ h1, h2 {
   -webkit-transform:rotate(7deg) scale(1.2);
   -ms-transform: rotate(7deg) scale(1.2);
   transform: rotate(7deg) scale(1.2);
+  
+  background:url('/images/playButton.png') center no-repeat
 }
     
 
