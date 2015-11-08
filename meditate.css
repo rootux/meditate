@@ -86,6 +86,7 @@ h1, h2 {
 #clockSelectModal .modal-dialog {
     margin: 30px auto;
     width: 190px;
+    color: black;
 }
 
 button {
