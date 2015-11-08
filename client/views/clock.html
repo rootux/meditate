@@ -1,12 +1,10 @@
 <template name="clock">
     <div class="row">
-      <div class="col-xs-6">
-        <a href="#"><img id="mandala" src="/images/mandala.png"></a>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-4">
-        <h2 id='timeToCount'>10 min</h2>
+      <div class="col-xs-9 col-xs-offset-1">
+        <div class="mandala-container">
+          <a href="#"><img id="mandala" src="/images/mandala.png"></a>
+          <div class="mask"></div>
+        </div>
       </div>
     </div>
     <div class="row">
@@ -18,14 +16,14 @@
         </div>
     </div>
     <div class="row">
+    
+  <input id="clock">
   {{#if isClockRunning}}
-    <button id="stop">Stop</button>
-    <button id="pause">Pause</button>
-  {{else}}
-    <button id="startClock">Start</button>
+  <menu>
+    <button class="stop"></button>
+    <button class="playpause pause"></button>
+  </menu>
   {{/if}}
-  <input id="clock" value="00:10">
-
   {{ >clockSelectModal}}
   
   </div>

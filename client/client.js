@@ -48,13 +48,22 @@ Template.clock.events({
     clock.start($('#clock').val());
   },
 
-  'click #stop': function() {
+  'click .stop': function() {
     Session.set('isClockRunning', false);
     clock.stop();
+    $('#clock').val('');
   },
 
-  'click #pause': function() {
+  'click .playpause': function(event) {
     clock.pause();
+    var e = $(event.target);
+    if(e.hasClass('pause')) {
+      e.removeClass('pause');
+      e.addClass('play');
+    }else {
+      e.removeClass('play');
+      e.addClass('pause');
+    }
   }
 });
 
@@ -65,7 +74,8 @@ function setClockWithCountdown(isCountdown) {
     interval: 250,
     callback: function () {
         console.log(clock.lap() / 1000);
-        $('#clock').val(clock.msToTime(Math.round(clock.lap() / 1000) * 1000));
+        var time = clock.msToTime(Math.round(clock.lap() / 1000) * 1000);
+        $('#clock').val(time.substring(0, time.indexOf("."))); //remove milliseconds
     },
     complete: function () {
         Session.set('isClockRunning', false);
