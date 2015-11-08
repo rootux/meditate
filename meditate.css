@@ -32,6 +32,17 @@ h1, h2 {
   width:100%;
 }
 
+#mandale {
+  transition: all .4s ease-out;
+}
+#mandala:hover
+{
+  -webkit-transform:rotate(7deg) scale(1.2);
+  -ms-transform: rotate(7deg) scale(1.2);
+  transform: rotate(7deg) scale(1.2);
+}
+    
+
 #timer {
   width:21px;
 }
